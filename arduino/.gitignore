@@ -1,4 +1,8 @@
-# Ignore everything in this directory
-*
-# Except this file
-!.gitignore
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
