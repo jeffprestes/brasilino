@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author jprestes
  */
-public class SocketComm implements Runnable {
+public class SocketComm  {
 
     BufferedReader leitorLinhas;
     InputStreamReader leitorCaracteres;
@@ -39,46 +39,31 @@ public class SocketComm implements Runnable {
         
     }
     
-    public boolean socketStart()    {
-        boolean retorno = false;
+    public void socketStart()    {
         
         try {
             
             System.out.println("Starting socket on port 8282");
             server = new ServerSocket(port);
-            Socket s = server.accept();
-            
             System.out.println("Server listening socket on port 8282");
-
-            this.setSocketComm(s);
             
-            retorno = true;
+            while (true)    {
+                Socket s = server.accept();
+                leitorSocket = s.getInputStream();
+                leitorCaracteres = new InputStreamReader(leitorSocket);
+                leitorLinhas = new BufferedReader(leitorCaracteres);
+            
+                TwoWaySerialComm serialComm = this.getSerialComm();
+            
+                serialComm.write(leitorLinhas.readLine());
+            }
             
         } catch (IOException ex) {
             Logger.getLogger(SocketComm.class.getName()).log(Level.SEVERE, "Error during socket initialization...", ex);
         }
         
-        return retorno;
     }
     
-    @Override
-    public void run() {
-        try {
-            Socket s = this.getSocketComm();
-            
-            leitorSocket = s.getInputStream();
-            leitorCaracteres = new InputStreamReader(leitorSocket);
-            leitorLinhas = new BufferedReader(leitorCaracteres);
-            
-            TwoWaySerialComm serialComm = this.getSerialComm();
-            
-            serialComm.write(leitorLinhas.readLine());
-            
-        } catch (IOException ex) {
-            Logger.getLogger(SocketComm.class.getName()).log(Level.SEVERE, "Error during socket listening", ex);
-        }
-        
-    }
 
     /**
      * @return the serialComm
