@@ -60,7 +60,7 @@
                   </descriptorRefs>
                   <archive>
                     <manifest>
-                      <mainClass>com.paypal.developer.jeffprestes.serialtalkrxtx.TwoWaySerialComm</mainClass>
+                      <mainClass>com.paypal.developer.jeffprestes.brasilino.java.client.Start</mainClass>
                     </manifest>
                   </archive>
                 </configuration>
