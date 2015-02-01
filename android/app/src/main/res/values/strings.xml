@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">THTPayPalCarrinho</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Beacon configuration. Leave the value empty for generic search -->
+    <!-- suppress CheckTagEmptyBody -->
+    <string name="uuid" translatable="false"></string>
+    <!-- suppress CheckTagEmptyBody -->
+    <string name="major" translatable="false"></string>
+    <!-- suppress CheckTagEmptyBody -->
+    <string name="minor" translatable="false"></string>
+
+    <string name="notification_generic_title">Candy</string>
+    <string name="notification_generic_message">There is a candy machine close to you! Enjoy it!</string>
+    <string name="action_purchase">Purchase</string>
+    <string name="message_machine_close">Machine close to you</string>
+    <string name="message_not_close_machine">Search for a candy machine</string>
+    <string name="title_activity_permission">Permission</string>
+    <string name="get_token_generic_error">An unexpected error occur. Please, try again.</string>
+
+
+</resources>
