@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Socket Client to test communications</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            
+            function pausecomp(millis)             {
+                var date = new Date();
+                var curDate = null;
+
+                do { curDate = new Date(); } 
+                while(curDate-date < millis);
+            } 
+            
+            function WebSocketTest()             {
+              if ("WebSocket" in window)               {
+                 alert("WebSocket is supported by your Browser!");
+                 // Let us open a web socket
+                 var ws = new WebSocket("ws://localhost:8282");
+                 
+                 ws.onopen = function()                 {
+                    // Web Socket is connected, send data using send()
+                    alert("Sending message...");
+                    ws.send("A");
+                    pausecomp(1000);
+                    ws.send("A");
+                    pausecomp(3000);
+                    ws.send("P");
+                    alert("Message is sent...");
+                 };
+                 
+                 ws.onmessage = function (evt) 
+                 { 
+                    var received_msg = evt.data;
+                    alert("Message is received..." + received_msg);
+                 };
+                 
+                 ws.onclose = function()
+                 { 
+                    // websocket is closed.
+                    alert("Connection is closed..."); 
+                 };
+              }              else              {
+                 // The browser doesn't support WebSocket
+                 alert("WebSocket NOT supported by your Browser!");
+              }
+            }
+            
+        </script>
+    </head>
+    <body>
+        <h1>Test Socket connection</h1>
+        <h2>    socket.send('A');<br />
+                pausecomp(1000);<br />
+                socket.send('A');<br />
+                pausecomp(3000);<br />
+                socket.send('F');<br />
+        </h2>
+        <script>
+            WebSocketTest();
+        </script>
+    </body>
+</html>

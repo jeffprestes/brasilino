@@ -20,20 +20,21 @@ public class Start {
     public static void main(String[] args) {
         // TODO code application logic here
         TwoWaySerialComm serialComm = new TwoWaySerialComm();
+        SocketComm socketComm = null;
+        Thread socketThread = null;
+        
         if (serialComm.connect())   {
-            serialComm.write("AZ");
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
+            socketComm = new SocketComm(serialComm);
+            
+            if (socketComm.socketStart())   {
+                socketThread = new Thread(socketComm);
+                socketThread.start();
+                System.out.println("Communications are set. Waiting for orders...");
+            }   else    {
+                System.err.println("Socket could not be started. Check error above.");
             }
-            serialComm.write("AZ");
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            serialComm.write("FZ");
+        }   else    {
+            System.err.println("Serial communication could not be estabelished. Check errors above.");
         }
         
         

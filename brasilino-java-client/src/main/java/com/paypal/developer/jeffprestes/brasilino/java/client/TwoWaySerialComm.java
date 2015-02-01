@@ -27,6 +27,8 @@ public class TwoWaySerialComm {
     };
     
     private OutputStream serialWriter = null;
+    private Thread readerThread = null;
+    private SerialPort serialPort = null;
     
     /**
      * Connect to Serial Device listed down below:
@@ -69,7 +71,7 @@ public class TwoWaySerialComm {
                 commPort = portIdentifier.open( this.getClass().getName(), timeout );
  
                 if( commPort instanceof SerialPort ) {
-                    SerialPort serialPort = ( SerialPort )commPort;
+                    serialPort = ( SerialPort )commPort;
                     serialPort.setSerialPortParams( 9600,
                                             SerialPort.DATABITS_8,
                                             SerialPort.STOPBITS_1,
@@ -78,7 +80,8 @@ public class TwoWaySerialComm {
                     InputStream in = serialPort.getInputStream();
                     serialWriter = serialPort.getOutputStream();
 
-                    ( new Thread( new SerialReader( in ) ) ).start();
+                    readerThread = new Thread( new SerialReader( in ) );
+                    readerThread.start();
 
                     retorno = true;
                     
@@ -125,6 +128,11 @@ public class TwoWaySerialComm {
         return retorno;
     }
     
+    
+    public void close()  {
+        readerThread.interrupt();
+        serialPort.close();
+    }
     
     public static class SerialReader implements Runnable {
  
