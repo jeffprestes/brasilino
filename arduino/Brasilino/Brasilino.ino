@@ -80,35 +80,33 @@ void parar()    {
 
 //Liga sentido frente
 void frente()   {
-    digitalWrite(MB, LOW);
-    delay(500);
     digitalWrite(MA, HIGH);    // turn the LED off by making the voltage LOW
+    delay(600);
+    digitalWrite(MA, LOW);
             
 }
 
 //Liga sentido frente
 void voltar()   {
-    digitalWrite(MA, LOW);
-    delay(500);
     digitalWrite(MB, HIGH);    // turn the LED off by making the voltage LOW
+    delay(600);
+    digitalWrite(MB, LOW);
             
 }
 
 //Liga direita
 void direita()   {
-    digitalWrite(MC, LOW);
-    delay(500);
     digitalWrite(MD, HIGH);    // turn the LED off by making the voltage LOW
-            
+    delay(300);
+    digitalWrite(MD, LOW);    // turn the LED off by making the voltage LOW
 }
 
 
 //Liga esquerda
 void esquerda()   {
-    digitalWrite(MD, LOW);
-    delay(500);
     digitalWrite(MC, HIGH);    // turn the LED off by making the voltage LOW
-            
+    delay(300);
+    digitalWrite(MC, LOW);    // turn the LED off by making the voltage LOW      
 }
 
 
@@ -122,7 +120,7 @@ String readData()      {
         c = Serial.read();
         matriz[incomingByte] = c;
         incomingByte++;
-        delay(4);
+        delay(2);
 
         // statement block
     } while (Serial.available());
