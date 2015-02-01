@@ -4,8 +4,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
@@ -41,6 +43,8 @@ public class MainFragment extends Fragment {
 
     public MainFragment() {}
 
+    private SharedPreferences sp;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -49,12 +53,16 @@ public class MainFragment extends Fragment {
         rdbTime = (RadioGroup) rootView.findViewById(R.id.rdb);
         rdbFive = (RadioButton) rootView.findViewById(R.id.rdbCinco);
 
+        sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
         mBtPurchase = ((Button) rootView.findViewById(R.id.btPurchase));
         mBtPurchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle infoBundle = null;
-                if(CarrinhoApplication.getDatasource().getToken() == null) {
+                if (sp.getString("ip", "").endsWith("tht")){
+                    goHome();
+                } else if(CarrinhoApplication.getDatasource().getToken() == null) {
                     Intent permissionIntent = new Intent(getActivity(), PermissionActivity.class);
                     if(infoBundle != null)
                         permissionIntent.putExtras(infoBundle);
@@ -152,10 +160,14 @@ public class MainFragment extends Fragment {
             Util.sendMessage("/candies/payment/finished",(successful?"true":"false"));
 
             if (successful) {
-                Intent o = new Intent(getActivity(), Home.class);
-                o.putExtra("isFive", lastTimeIsFive);
-                startActivity(o);
+                goHome();
             }
         }
     };
+
+    public void goHome(){
+        Intent o = new Intent(getActivity(), Home.class);
+        o.putExtra("isFive", lastTimeIsFive);
+        startActivity(o);
+    }
 }

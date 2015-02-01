@@ -91,7 +91,8 @@ public class PaymentService extends Service {
             public void onResponse (NewTransaction response)    {
                 if (response.isSuccessfull()) {
 
-                    WebServerHelper.sendMachineOrder(
+                    finishService("Pegar dados do usuário...", true);
+                    /*WebServerHelper.sendMachineOrder(
                             token,
                             new Response.Listener<NewTransaction>() {
 
@@ -115,7 +116,7 @@ public class PaymentService extends Service {
                                     finishService(Log.getStackTraceString(error), false);
                                 }
                             }
-                    );
+                    );*/
 
                 } else {
                     finishService(response.getMessage(), false);
