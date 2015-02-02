@@ -1,10 +1,12 @@
 package com.paypal.developer.brasilino;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -38,10 +40,15 @@ public class Home extends ActionBarActivity implements View.OnTouchListener{
     private boolean frente = false;
     private boolean tras = false;
 
+    private String ip;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        ip = sp.getString("ip", "");
 
         getSupportActionBar().hide();
 
@@ -71,7 +78,7 @@ public class Home extends ActionBarActivity implements View.OnTouchListener{
         WebView web = (WebView) findViewById(R.id.webview);
         WebSettings webSettings = web.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        web.loadUrl("http://192.168.1.42:8181/camera.php");
+        web.loadUrl("http://"+ip+":8181/camera.php");
     }
 
     public void cima(View v) {
@@ -114,7 +121,7 @@ public class Home extends ActionBarActivity implements View.OnTouchListener{
 
             Socket s;
             try {
-                s = new Socket("192.168.1.42", 8282);
+                s = new Socket(ip, 8282);
 
                 escritorSocket = s.getOutputStream();
                 escritorCaracteres = new OutputStreamWriter(escritorSocket);

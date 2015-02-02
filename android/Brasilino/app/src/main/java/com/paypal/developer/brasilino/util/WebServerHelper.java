@@ -55,7 +55,7 @@ public class WebServerHelper {
         ));
     }
 
-    public static void sendMachineOrder(Token token, Response.Listener<NewTransaction> successResponse, Response.ErrorListener errorResponse) {
+    /*public static void sendMachineOrder(Token token, Response.Listener<NewTransaction> successResponse, Response.ErrorListener errorResponse) {
         CarrinhoApplication.get().addRequestToQueue(new GsonRequest<>(
                 WebServerHelper.ORDER_MACHINE_PATH,
                 WebServerHelper.getMachineOrderPost(token.getToken()),
@@ -63,7 +63,7 @@ public class WebServerHelper {
                 errorResponse,
                 NewTransaction.class
         ));
-    }
+    }*/
 
     public static void requestNewToken(Response.Listener<Token> successResponse, Response.ErrorListener errorResponse) {
         CarrinhoApplication.get().addRequestToQueue(new GsonRequest<>(
