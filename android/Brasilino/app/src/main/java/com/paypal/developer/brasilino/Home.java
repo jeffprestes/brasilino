@@ -20,6 +20,8 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.paypal.developer.brasilino.util.Util;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -78,7 +80,7 @@ public class Home extends ActionBarActivity implements View.OnTouchListener{
         WebView web = (WebView) findViewById(R.id.webview);
         WebSettings webSettings = web.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        web.loadUrl("http://"+ip+":8181/camera.php");
+        web.loadUrl("http://"+ Util.retiraTHT(ip) +":8181/camera.php");
     }
 
     public void cima(View v) {
@@ -121,7 +123,7 @@ public class Home extends ActionBarActivity implements View.OnTouchListener{
 
             Socket s;
             try {
-                s = new Socket(ip, 8282);
+                s = new Socket(Util.retiraTHT(ip), 8282);
 
                 escritorSocket = s.getOutputStream();
                 escritorCaracteres = new OutputStreamWriter(escritorSocket);

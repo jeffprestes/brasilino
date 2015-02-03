@@ -36,13 +36,16 @@ public class MyAlertDialogFragment extends DialogFragment {
 
         return new AlertDialog.Builder(getActivity())
                 .setIcon(R.drawable.ic_logo_paypal)
-                .setTitle("Confs")
+                .setTitle("Configuracao IP Carro")
                 .setView(view)
                 .setPositiveButton("Ok",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                spEditor.putString("ip", edtIp.getText().toString());
+
+                                String ipTemp = edtIp.getText().toString();
+                                spEditor.putString("ip", ipTemp);
                                 spEditor.commit();
+
                                 Toast.makeText(getActivity(), "Configuração salva!", Toast.LENGTH_LONG).show();
                             }
                         }

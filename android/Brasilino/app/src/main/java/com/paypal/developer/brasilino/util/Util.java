@@ -96,5 +96,18 @@ public class Util
                 receiverPendent
         );
     }
+
+    //TODO: Refazer a logica de desabilitar a cobrança do paypal para Ricardo
+    //Criar outra variavel em SharedPreferences
+    public static String retiraTHT(String ipTemp)   {
+
+         String trechoFinal = ipTemp.substring(ipTemp.length()-3,ipTemp.length());
+
+         if ("tht".equalsIgnoreCase(trechoFinal))    {
+            ipTemp = ipTemp.substring(0,ipTemp.length()-3);
+         }
+
+        return ipTemp;
+    }
 }
 

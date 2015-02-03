@@ -60,6 +60,8 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle infoBundle = null;
+                //TODO: Refazer a logica de desabilitar a cobrança do paypal para Ricardo
+                //Criar outra variavel em SharedPreferences
                 if (sp.getString("ip", "").endsWith("tht")){
                     goHome();
                 } else if(CarrinhoApplication.getDatasource().getToken() == null) {
