@@ -45,22 +45,25 @@ public class SocketComm  {
             server = new ServerSocket(port);
             System.out.println("Server listening socket on port 8282");
             System.out.println("Activating motor...");
-            //Motor m = new Motor();
+            Motor m = new Motor();
             System.out.println("Motor activated...");
             
             String cmd = "";
             
-            Socket s = server.accept();
-            leitorSocket = s.getInputStream();
-            leitorCaracteres = new InputStreamReader(leitorSocket);
-            leitorLinhas = new BufferedReader(leitorCaracteres);
-            
             while (true)    {
+                Socket s = server.accept();
+                System.out.println("Socket created.");
+                leitorSocket = s.getInputStream();
+                leitorCaracteres = new InputStreamReader(leitorSocket);
+                leitorLinhas = new BufferedReader(leitorCaracteres);
+            
+            
                 cmd = leitorLinhas.readLine();
+                System.out.println(cmd);
                 if (cmd != null)    {
                     cmd = cmd.substring(0, cmd.length()-1);
-                    System.out.println(cmd);
-                    //m.opere(cmd);
+                    
+                    m.opere(cmd);
                 }
             }
             

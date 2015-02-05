@@ -20,7 +20,7 @@ public class Motor {
     
     final GpioController gpio = GpioFactory.getInstance();
     final GpioPinDigitalOutput pinFrente = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Motor", PinState.LOW);
-    final GpioPinDigitalOutput pinTras = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Motor", PinState.LOW);
+    final GpioPinDigitalOutput pinTras = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Motor", PinState.LOW);
     final GpioPinDigitalOutput pinDireita = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "Motor", PinState.LOW);
     final GpioPinDigitalOutput pinEsquerda = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Motor", PinState.LOW);
 
