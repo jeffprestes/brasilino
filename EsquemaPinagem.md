@@ -1,3 +1,7 @@
+#Esquema de pinagem sugerida programada no client RaspberryPi
+=============================================================
+
+
 Direcao  =Arduino  =Pino no RaspberryPi
 
 tras      =5        =7
