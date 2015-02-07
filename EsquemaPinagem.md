@@ -12,4 +12,3 @@ direita   =7        =16
 Terra     =gnd      =6
 
 5V        =5v       =2
-
