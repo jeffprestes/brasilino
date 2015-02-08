@@ -41,16 +41,12 @@ public class Home extends ActionBarActivity implements View.OnTouchListener{
     private ImageView imgCima;
     private ImageView imgBaixo;
 
-    private boolean frente = false;
-    private boolean tras = false;
-
     private String ip;
 
-    private BufferedWriter escritorLinhas;
-    private OutputStreamWriter escritorCaracteres;
-    private OutputStream escritorSocket;
-
-    private Socket s;
+    private BufferedWriter escritorLinhas = null;
+    private OutputStreamWriter escritorCaracteres = null;
+    private OutputStream escritorSocket = null;
+    private Socket s = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,10 +93,10 @@ public class Home extends ActionBarActivity implements View.OnTouchListener{
         imgBaixo = (ImageView) findViewById(R.id.imgBaixo);
         imgBaixo.setOnTouchListener(this);
 
-        imgEsquerda.setEnabled(false);
-        imgBaixo.setEnabled(false);
-        imgCima.setEnabled(false);
-        imgDireita.setEnabled(false);
+        imgEsquerda.setEnabled(true);
+        imgBaixo.setEnabled(true);
+        imgCima.setEnabled(true);
+        imgDireita.setEnabled(true);
 
         WebView web = (WebView) findViewById(R.id.webview);
         WebSettings webSettings = web.getSettings();
@@ -111,16 +107,8 @@ public class Home extends ActionBarActivity implements View.OnTouchListener{
     @Override
     protected void onResume() {
         super.onResume();
-        new CreateSocket().execute();
     }
 
-    public void cima(View v) {
-            new Assincrono().execute("A;");
-    }
-
-    public void baixo(View v) {
-            new Assincrono().execute("F;");
-    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -142,7 +130,7 @@ public class Home extends ActionBarActivity implements View.OnTouchListener{
             } else if (v == imgCima) {
                 new Assincrono().execute("FD;");
             } else if (v == imgBaixo) {
-                new Assincrono().execute("TD;");
+                new Assincrono().execute("PP;");
             }
         }
         return true;
@@ -151,7 +139,9 @@ public class Home extends ActionBarActivity implements View.OnTouchListener{
     class Assincrono extends AsyncTask<String, Void, String> {
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(String... params)   {
+
+            Log.d("COMANDO_PARA_CARRINHO", params[0]);
 
             try {
                 s = new Socket(ip, 8282);
@@ -159,17 +149,29 @@ public class Home extends ActionBarActivity implements View.OnTouchListener{
                 escritorSocket = s.getOutputStream();
                 escritorCaracteres = new OutputStreamWriter(escritorSocket);
                 escritorLinhas = new BufferedWriter(escritorCaracteres);
+
                 escritorLinhas.write(params[0]);
+
                 escritorLinhas.flush();
                 escritorLinhas.close();
-
+                escritorCaracteres.flush();
+                escritorCaracteres.close();
+                escritorSocket.flush();
+                escritorSocket.close();
                 s.close();
 
+                s=null;
+                escritorLinhas = null;
+                escritorCaracteres = null;
+                escritorSocket = null;
+
                 return "foi";
+
             } catch (UnknownHostException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-                return "UnknownHostException: ";
+                return "UnknownHostException: " + e;
+
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -177,61 +179,10 @@ public class Home extends ActionBarActivity implements View.OnTouchListener{
             }
         }
 
-    }
-
-    class CreateSocket extends AsyncTask<String, Void, String> {
-
-        private ProgressDialog pd;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            //pd = ProgressDialog.show(, getString(R.string.aviso), getString(R.string.corpo_aviso));
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            try {
-                s = new Socket(ip, 8282);
-
-                escritorSocket = s.getOutputStream();
-                escritorCaracteres = new OutputStreamWriter(escritorSocket);
-                escritorLinhas = new BufferedWriter(escritorCaracteres);
-                escritorLinhas.write(params[0]);
-                escritorLinhas.flush();
-                escritorLinhas.close();
-
-                s.close();
-
-                return "foi";
-
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-                return "UnknownHostException: ";
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "IOException: "+e;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            //pd.dismiss();
-        }
     }
 
     @Override
     protected void onDestroy() {
-        try {
-            escritorLinhas.close();
-            s.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
         super.onDestroy();
     }
 }
