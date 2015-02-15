@@ -5,9 +5,6 @@
  */
 package com.paypal.developer.jeffprestes.brasilino.java.client;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author jprestes
