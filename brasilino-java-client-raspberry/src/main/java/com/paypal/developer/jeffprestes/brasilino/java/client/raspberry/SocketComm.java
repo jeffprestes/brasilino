@@ -27,16 +27,6 @@ public class SocketComm  {
     private int port = 8282;
     private ServerSocket server = null;
     
-    
-    /**
-     * Initialize Socket Communication on port 8282
-     * @param serialComm Serial Communication to send commands received from Socket
-     */
-    public SocketComm ()     {
-        
-        
-    }
-    
     public void socketStart()    {
         
         try {
