@@ -10,6 +10,7 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.wiringpi.SoftPwm;
 
 
 /**
@@ -18,11 +19,15 @@ import com.pi4j.io.gpio.RaspiPin;
  */
 public class Motor {
     
-    MotorController mControl = null;
+    OseppMotorContoller mControl = null;
 
     public Motor()  {
         super();
         mControl = new OseppMotorContoller();
+        if (mControl.hasPWM())  {
+            SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 99);
+            mControl.getPinPWMDirecao().high();
+        }
         this.frenteAtiva();
         this.frenteDesativa();
         this.trasAtiva();
