@@ -18,14 +18,11 @@ import com.pi4j.io.gpio.RaspiPin;
  */
 public class Motor {
     
-    final GpioController gpio = GpioFactory.getInstance();
-    final GpioPinDigitalOutput pinFrente = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Motor", PinState.LOW);
-    final GpioPinDigitalOutput pinTras = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Motor", PinState.LOW);
-    final GpioPinDigitalOutput pinDireita = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "Motor", PinState.LOW);
-    final GpioPinDigitalOutput pinEsquerda = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Motor", PinState.LOW);
+    MotorController mControl = null;
 
     public Motor()  {
         super();
+        mControl = new OseppMotorContoller();
         this.frenteAtiva();
         this.frenteDesativa();
         this.trasAtiva();
@@ -90,8 +87,8 @@ public class Motor {
      * Activate engine to move forward
      */
     public void frenteAtiva()    {
-        this.frenteDesativa();
-        this.pinFrente.high();
+        this.trasDesativa();
+        mControl.getPinFrente().high();
         System.out.println("frenteAtiva");
     }
     
@@ -99,8 +96,8 @@ public class Motor {
      * Activate engine to move backward
      */
     public void trasAtiva()     {
-        this.trasDesativa();
-        this.pinTras.high();
+        this.frenteDesativa();
+        mControl.getPinTras().high();
         System.out.println("trasAtiva");
     }
     
@@ -108,8 +105,8 @@ public class Motor {
      * Activate engine to move to right
      */
     public void direitaAtiva()  {
-        this.direitaDesativa();
-        this.pinDireita.high();
+        this.esquerdaDesativa();
+        mControl.getPinDireita().high();
         System.out.println("direitaAtiva");
     }
     
@@ -118,8 +115,8 @@ public class Motor {
      * Activate engine to move to left
      */
     public void esquerdaAtiva()     {
-        this.esquerdaDesativa();
-        this.pinEsquerda.high();
+        this.direitaDesativa();
+        mControl.getPinEsquerda().high();
         System.out.println("esquerdaAtiva");
     }
     
@@ -127,7 +124,7 @@ public class Motor {
      * Deactivate engine that move forwards
      */
     public void frenteDesativa()    {
-        this.pinFrente.low();
+        mControl.getPinFrente().low();
         System.out.println("frenteDesativa");
     }
     
@@ -136,7 +133,7 @@ public class Motor {
      * Deactivate engine that move backwards
      */
     public void trasDesativa()      {
-        this.pinTras.low();
+        mControl.getPinTras().low();
         System.out.println("trasDesativa");
     }
     
@@ -145,7 +142,7 @@ public class Motor {
      * Deactivate engine that moves toward to right
      */
     public void direitaDesativa()   {
-        this.pinDireita.low();
+        mControl.getPinDireita().low();
         System.out.println("direitaDesativa");
     }
     
@@ -153,7 +150,7 @@ public class Motor {
      * Deactivate engine that moves toward to left
      */
     public void esquerdaDesativa()  {
-        this.pinEsquerda.low();
+        mControl.getPinEsquerda().low();
         System.out.println("esquerdaDesativa");
     }
     
@@ -161,8 +158,8 @@ public class Motor {
      * Breaks the car
      */
     public void freia()     {
-        this.pinFrente.low();
-        this.pinTras.low();
+        this.frenteDesativa();
+        this.trasDesativa();
         System.out.println("freia");
     }
 }
