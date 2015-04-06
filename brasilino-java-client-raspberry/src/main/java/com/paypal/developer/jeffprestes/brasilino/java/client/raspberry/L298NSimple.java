@@ -9,9 +9,9 @@ public class L298NSimple extends MotorController {
 
     public L298NSimple() {
         super();
-        this.setHasPWM(true);
-        this.setPinPWMDirecao(23);
-        this.setPinPWMPropulsao(1);
+        this.setHasPWM(false);
+        /*this.setPinPWMDirecao(1);
+        this.setPinPWMPropulsao(1);*/
         this.setPinDireita(RaspiPin.GPIO_07);
         this.setPinEsquerda(RaspiPin.GPIO_00);
         this.setPinFrente(RaspiPin.GPIO_02);
