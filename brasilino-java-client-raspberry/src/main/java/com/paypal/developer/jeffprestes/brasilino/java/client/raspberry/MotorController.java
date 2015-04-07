@@ -11,7 +11,6 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.wiringpi.SoftPwm;
 
 /**
@@ -22,6 +21,8 @@ public class MotorController {
     
     private GpioController gpio = null;
     private boolean hasPWM = false;
+    private int pinPWMPropulsao = 0;
+    private int pinPWMDirecao = 0;
     private GpioPinDigitalOutput pinFrente = null;
     private GpioPinDigitalOutput pinTras = null;
     private GpioPinDigitalOutput pinDireita = null;
@@ -40,7 +41,19 @@ public class MotorController {
         return hasPWM;
     }
 
-    
+    /**
+     * @return the pinPWMPropulsao
+     */
+    public int getPinPWMPropulsao() {
+        return pinPWMPropulsao;
+    }
+
+    /**
+     * @return the pinPWMDirecao
+     */
+    public int getPinPWMDirecao() {
+        return pinPWMDirecao;
+    }
 
     /**
      * @return the pinFrente
@@ -80,6 +93,21 @@ public class MotorController {
         }
     }
 
+    /**
+     * @param pinPWMPropulsao the pinPWMPropulsao to set
+     */
+    protected void setPinPWMPropulsao(int pinPWMPropulsao) {
+        this.pinPWMPropulsao = pinPWMPropulsao;
+        SoftPwm.softPwmCreate(this.getPinPWMPropulsao(), 0, 100);
+    }
+
+    /**
+     * @param pinPWMDirecao the pinPWMDirecao to set
+     */
+    protected void setPinPWMDirecao(int pinPWMDirecao) {
+        this.pinPWMDirecao = pinPWMDirecao;
+        SoftPwm.softPwmCreate(this.getPinPWMDirecao(), 0, 100);
+    }
 
     /**
      * @param pinFrente the pinFrente to set
@@ -109,7 +137,5 @@ public class MotorController {
         this.pinEsquerda = gpio.provisionDigitalOutputPin(pino, "Motor", PinState.LOW);;
     }
     
-    protected GpioController getGpioController()    {
-        return gpio;
-    }
+    
 }

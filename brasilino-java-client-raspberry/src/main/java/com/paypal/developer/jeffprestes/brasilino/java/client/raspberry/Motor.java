@@ -5,11 +5,6 @@
  */
 package com.paypal.developer.jeffprestes.brasilino.java.client.raspberry;
 
-import com.pi4j.io.gpio.GpioController;
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.wiringpi.SoftPwm;
 
 
@@ -19,15 +14,11 @@ import com.pi4j.wiringpi.SoftPwm;
  */
 public class Motor {
     
-    OseppMotorContoller mControl = null;
+    MotorController mControl = null;
 
     public Motor()  {
         super();
         mControl = new OseppMotorContoller();
-        if (mControl.hasPWM())  {
-            SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 99);
-            mControl.getPinPWMDirecao().high();
-        }
         this.frenteAtiva();
         this.frenteDesativa();
         this.trasAtiva();
@@ -93,6 +84,7 @@ public class Motor {
      */
     public void frenteAtiva()    {
         this.trasDesativa();
+        SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 99);
         mControl.getPinFrente().high();
         System.out.println("frenteAtiva");
     }
@@ -102,6 +94,7 @@ public class Motor {
      */
     public void trasAtiva()     {
         this.frenteDesativa();
+        SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 99);
         mControl.getPinTras().high();
         System.out.println("trasAtiva");
     }
@@ -111,6 +104,7 @@ public class Motor {
      */
     public void direitaAtiva()  {
         this.esquerdaDesativa();
+        SoftPwm.softPwmWrite(mControl.getPinPWMDirecao(), 99);
         mControl.getPinDireita().high();
         System.out.println("direitaAtiva");
     }
@@ -121,6 +115,7 @@ public class Motor {
      */
     public void esquerdaAtiva()     {
         this.direitaDesativa();
+        SoftPwm.softPwmWrite(mControl.getPinPWMDirecao(), 99);
         mControl.getPinEsquerda().high();
         System.out.println("esquerdaAtiva");
     }
@@ -129,6 +124,7 @@ public class Motor {
      * Deactivate engine that move forwards
      */
     public void frenteDesativa()    {
+        SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 0);
         mControl.getPinFrente().low();
         System.out.println("frenteDesativa");
     }
@@ -138,6 +134,7 @@ public class Motor {
      * Deactivate engine that move backwards
      */
     public void trasDesativa()      {
+        SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 0);
         mControl.getPinTras().low();
         System.out.println("trasDesativa");
     }
@@ -147,6 +144,7 @@ public class Motor {
      * Deactivate engine that moves toward to right
      */
     public void direitaDesativa()   {
+        SoftPwm.softPwmWrite(mControl.getPinPWMDirecao(), 0);
         mControl.getPinDireita().low();
         System.out.println("direitaDesativa");
     }
@@ -155,6 +153,7 @@ public class Motor {
      * Deactivate engine that moves toward to left
      */
     public void esquerdaDesativa()  {
+        SoftPwm.softPwmWrite(mControl.getPinPWMDirecao(), 0);
         mControl.getPinEsquerda().low();
         System.out.println("esquerdaDesativa");
     }
