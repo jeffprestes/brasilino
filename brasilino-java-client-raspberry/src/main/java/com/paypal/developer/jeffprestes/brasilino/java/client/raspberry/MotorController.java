@@ -105,29 +105,29 @@ abstract public class MotorController {
     /**
      * @param pinFrente the pinFrente to set
      */
-    protected void setPinFrente(Pin pinFrente) {
-        this.pinFrente = gpio.provisionDigitalOutputPin(pinFrente, "Motor", PinState.LOW);
+    protected void setPinFrente(Pin pino) {
+        this.pinFrente = gpio.provisionDigitalOutputPin(pino, "Motor", PinState.LOW);
     }
 
     /**
      * @param pinTras the pinTras to set
      */
-    protected void setPinTras(Pin pinTras) {
-        this.pinTras = gpio.provisionDigitalOutputPin(pinTras, "Motor", PinState.LOW);
+    protected void setPinTras(Pin pino) {
+        this.pinTras = gpio.provisionDigitalOutputPin(pino, "Motor", PinState.LOW);
     }
 
     /**
      * @param pinDireita the pinDireita to set
      */
-    protected void setPinDireita(Pin pinDireita) {
-        this.pinDireita = gpio.provisionDigitalOutputPin(pinDireita, "Motor", PinState.LOW);
+    protected void setPinDireita(Pin pino) {
+        this.pinDireita = gpio.provisionDigitalOutputPin(pino, "Motor", PinState.LOW);
     }
 
     /**
      * @param pinEsquerda the pinEsquerda to set
      */
-    protected void setPinEsquerda(Pin pinEsquerda) {
-        this.pinEsquerda = gpio.provisionDigitalOutputPin(pinEsquerda, "Motor", PinState.LOW);
+    protected void setPinEsquerda(Pin pino) {
+        this.pinEsquerda = gpio.provisionDigitalOutputPin(pino, "Motor", PinState.LOW);
     }
     
     
