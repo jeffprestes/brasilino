@@ -5,6 +5,7 @@
  */
 package com.paypal.developer.jeffprestes.brasilino.java.client.raspberry;
 
+import com.paypal.developer.jeffprestes.brasilino.java.client.motorcontrollerboard.MotorController;
 import com.pi4j.wiringpi.SoftPwm;
 
 
@@ -16,9 +17,17 @@ public class Motor {
     
     MotorController mControl = null;
 
-    public Motor()  {
+    /**
+     * Creates a motor that controls car's moviments.
+     * 
+     * @param motorController contains information about what motor
+     * controller board model is being in use. Also, it defines which pins on 
+     * Raspberry Pi being used to activates the two motors and for what directions
+     * they must turn.
+     */
+    public Motor(MotorController motorController)  {
         super();
-        mControl = new OseppMotorContoller();
+        mControl = motorController;
         this.frenteAtiva();
         this.frenteDesativa();
         this.trasAtiva();
@@ -84,7 +93,9 @@ public class Motor {
      */
     public void frenteAtiva()    {
         this.trasDesativa();
-        SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 99);
+        if (mControl.hasPWM())  {
+            SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 99);
+        }
         mControl.getPinFrente().high();
         System.out.println("frenteAtiva");
     }
@@ -94,7 +105,9 @@ public class Motor {
      */
     public void trasAtiva()     {
         this.frenteDesativa();
-        SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 99);
+        if (mControl.hasPWM())      {
+            SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 99);
+        }
         mControl.getPinTras().high();
         System.out.println("trasAtiva");
     }
@@ -104,7 +117,9 @@ public class Motor {
      */
     public void direitaAtiva()  {
         this.esquerdaDesativa();
-        SoftPwm.softPwmWrite(mControl.getPinPWMDirecao(), 99);
+        if (mControl.hasPWM())  {
+            SoftPwm.softPwmWrite(mControl.getPinPWMDirecao(), 99);
+        }
         mControl.getPinDireita().high();
         System.out.println("direitaAtiva");
     }
@@ -115,7 +130,9 @@ public class Motor {
      */
     public void esquerdaAtiva()     {
         this.direitaDesativa();
-        SoftPwm.softPwmWrite(mControl.getPinPWMDirecao(), 99);
+        if (mControl.hasPWM())  {
+            SoftPwm.softPwmWrite(mControl.getPinPWMDirecao(), 99);
+        }
         mControl.getPinEsquerda().high();
         System.out.println("esquerdaAtiva");
     }
@@ -124,7 +141,9 @@ public class Motor {
      * Deactivate engine that move forwards
      */
     public void frenteDesativa()    {
-        SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 0);
+        if (mControl.hasPWM())  {
+            SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 0);
+        }
         mControl.getPinFrente().low();
         System.out.println("frenteDesativa");
     }
@@ -134,7 +153,9 @@ public class Motor {
      * Deactivate engine that move backwards
      */
     public void trasDesativa()      {
-        SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 0);
+        if (mControl.hasPWM())  {
+            SoftPwm.softPwmWrite(mControl.getPinPWMPropulsao(), 0);
+        }
         mControl.getPinTras().low();
         System.out.println("trasDesativa");
     }
@@ -144,7 +165,9 @@ public class Motor {
      * Deactivate engine that moves toward to right
      */
     public void direitaDesativa()   {
-        SoftPwm.softPwmWrite(mControl.getPinPWMDirecao(), 0);
+        if (mControl.hasPWM())      {
+            SoftPwm.softPwmWrite(mControl.getPinPWMDirecao(), 0);
+        }
         mControl.getPinDireita().low();
         System.out.println("direitaDesativa");
     }
@@ -153,7 +176,9 @@ public class Motor {
      * Deactivate engine that moves toward to left
      */
     public void esquerdaDesativa()  {
-        SoftPwm.softPwmWrite(mControl.getPinPWMDirecao(), 0);
+        if (mControl.hasPWM())      {
+            SoftPwm.softPwmWrite(mControl.getPinPWMDirecao(), 0);
+        }
         mControl.getPinEsquerda().low();
         System.out.println("esquerdaDesativa");
     }
