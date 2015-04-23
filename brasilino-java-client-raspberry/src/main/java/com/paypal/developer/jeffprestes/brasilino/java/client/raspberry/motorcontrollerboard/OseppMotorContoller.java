@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.paypal.developer.jeffprestes.brasilino.java.client.raspberry;
+package com.paypal.developer.jeffprestes.brasilino.java.client.raspberry.motorcontrollerboard;
 
+import com.paypal.developer.jeffprestes.brasilino.java.client.raspberry.motorcontrollerboard.MotorController;
 import com.pi4j.io.gpio.RaspiPin;
 
 /**

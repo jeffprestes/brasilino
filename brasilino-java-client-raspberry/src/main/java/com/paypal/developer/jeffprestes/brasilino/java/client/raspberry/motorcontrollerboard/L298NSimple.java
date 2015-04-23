@@ -1,4 +1,4 @@
-package com.paypal.developer.jeffprestes.brasilino.java.client.motorcontrollerboard;
+package com.paypal.developer.jeffprestes.brasilino.java.client.raspberry.motorcontrollerboard;
 
 import com.pi4j.io.gpio.RaspiPin;
 
